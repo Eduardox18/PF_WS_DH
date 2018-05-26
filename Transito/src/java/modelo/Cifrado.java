@@ -11,7 +11,7 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class Cifrado {
     
-    public String cifrarCadena(String cadena) {
+    public static String cifrarCadena(String cadena) {
         String cifrada = null;
         
         try {
