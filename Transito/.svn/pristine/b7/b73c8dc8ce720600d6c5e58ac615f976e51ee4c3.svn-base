@@ -1,0 +1,50 @@
+package servicios;
+
+import java.io.IOException;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.Produces;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
+import modelo.dao.ConductorDAO;
+import servicios.pojos.Conductor;
+import servicios.pojos.Mensaje;
+
+@Path("Condiuctor")
+public class ConductorWS {
+    
+    @Context
+    private UriInfo context;
+
+    public ConductorWS() {
+    }
+    
+    @Path("agregarUsuario")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje agregarUsuario(
+        @FormParam("nombre") String nombre,
+        @FormParam("apPaterno") String apPaterno,
+        @FormParam("apMaterno") String apMaterno,
+        @FormParam("fechaNacimiento") String fechaNacimiento,
+        @FormParam("noLicencia") String noLicencia,
+        @FormParam("telCelular") String telCelular,
+        @FormParam("password") String password) 
+    {
+        Mensaje mensajeRespuesta = new Mensaje();
+        Conductor conductor = new Conductor(nombre, apPaterno, apMaterno, fechaNacimiento, 
+                noLicencia, telCelular, password);
+        try {
+            ConductorDAO.agregarConductor(conductor);
+            mensajeRespuesta.setError(false);
+            mensajeRespuesta.setMensaje("El usuario se agregó correctamente");
+        } catch (IOException ex) {
+            mensajeRespuesta.setError(true);
+            mensajeRespuesta.setMensaje("Ocurrió un error al registrar el usuario");
+        }
+        return mensajeRespuesta;
+    }
+    
+}
