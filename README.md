@@ -1,5 +1,4 @@
-# PF_WS_DH
-API REST para la aplicación de Android RSX.
+# API REST para la Aplicación RSX
 Trabajo final de la Experiencia Educativa Desarrollo de Aplicaciones, impartida por el maestro Mario Alberto Hernández Pérez.<br/>
 
 Autores:<br/>
