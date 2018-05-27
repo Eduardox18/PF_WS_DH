@@ -119,4 +119,27 @@ public class ConductorWS {
         return mensajeRespuesta;
     }
 
+    @Path("consultarCodigo")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje consultarCodigoVerificacion(
+            @FormParam("telCelular") String telCelular) {
+        Mensaje mensajeRespuesta = new Mensaje();
+        Integer codigoVerificacion;
+        try {
+            codigoVerificacion = ConductorDAO.consultarCodigoVerificacion(telCelular);
+            if (codigoVerificacion != null) {
+                mensajeRespuesta.setSmsCode(Integer.toString(codigoVerificacion));
+            } else {
+                mensajeRespuesta.setMensaje("El usuario no se encuentra registrado");
+                mensajeRespuesta.setStatusMensaje(253);
+            }
+
+        } catch (Exception ex) {
+            mensajeRespuesta.setMensaje("Error al recuperar");
+            mensajeRespuesta.setStatusMensaje(1);
+        }
+        return mensajeRespuesta;
+    }
+
 }

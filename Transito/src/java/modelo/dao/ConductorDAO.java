@@ -45,6 +45,15 @@ public class ConductorDAO {
         return status;
     }
     
+    public static Integer consultarCodigoVerificacion(String telCelular) throws Exception {
+        Integer codigoVerificacion;
+        try (SqlSession conn = MyBatisUtils.getSession()) {
+            codigoVerificacion = conn.selectOne("Conductor.recuperarCodigoVerificacion", 
+                    telCelular);
+        }
+        return codigoVerificacion;
+    }
+    
     public static boolean disponibilidadConductor(Conductor conductor) 
             throws Exception {
         boolean disponible = true;

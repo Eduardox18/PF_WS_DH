@@ -15,9 +15,8 @@ public class Conductor {
     public Conductor() {
     }
 
-    public Conductor(Integer idConductor, String nombre, String apPaterno, String apMaterno, 
+    public Conductor(String nombre, String apPaterno, String apMaterno, 
             String fechaNacimiento, String noLicencia, String telCelular, String password) {
-        this.idConductor = idConductor;
         this.nombre = nombre;
         this.apPaterno = apPaterno;
         this.apMaterno = apMaterno;

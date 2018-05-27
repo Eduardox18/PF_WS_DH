@@ -13,19 +13,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     
     <select id="iniciarSesion" parameterType="servicios.pojos.Conductor"
-    resultType="servicios.pojos.Conductor">
+            resultType="servicios.pojos.Conductor">
         SELECT * FROM conductor WHERE telCelular = #{telCelular};
     </select>
     
     <select id="consultarStatus" parameterType="String" 
+            resultType="Integer">
+        SELECT status FROM conductor WHERE telCelular = #{telCeluar}; 
+    </select>
+    
+    <select id="recuperarCodigoVerificacion" parameterType="String" 
     resultType="Integer">
-           SELECT status FROM conductor WHERE telCelular = #{telCeluar}; 
+        SELECT codigoVerificacion FROM conductor WHERE telCelular = #{telCelular};
     </select>
     
     <select id="disponibilidadConductor" 
-    parameterType="servicios.pojos.Conductor" 
-            resultType = "int">
-            SELECT idConductor FROM Conductor WHERE telCelular = #{telCelular} 
-            OR noLicencia = #{noLicencia};
+            parameterType="servicios.pojos.Conductor" 
+            resultType = "Integer">
+        SELECT idConductor FROM Conductor WHERE telCelular = #{telCelular} 
+        OR noLicencia = #{noLicencia};
     </select>
 </mapper>
