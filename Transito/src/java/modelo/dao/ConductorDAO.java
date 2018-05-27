@@ -65,4 +65,14 @@ public class ConductorDAO {
         }
         return disponible;
     }
+    
+    public static boolean activarConductor(String telCelular) throws Exception {
+        boolean exito = false;
+        try (SqlSession conn = MyBatisUtils.getSession()) {
+            conn.update("Conductor.activarConductor", telCelular);
+            conn.commit();
+            exito = true;
+        }
+        return exito;
+    }
 }

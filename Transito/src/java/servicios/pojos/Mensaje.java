@@ -7,6 +7,9 @@ public class Mensaje {
      * 1 es que ocurrió un error
      * 0 es que no ocurrió un error
      * 149 es que ya existe ese celular o licencia
+     * 150 es que se activó el usuario
+     * 151 es que no se pudo activar el usuario
+     * 152 es que el smsCode es incorrecto
      * 250 es que el usuario existe y su contraseña es correcta
      * 251 es que los datos son incorrectos
      * 252 es que el usuario no ha activado su cuenta

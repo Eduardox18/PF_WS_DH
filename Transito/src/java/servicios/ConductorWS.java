@@ -1,7 +1,6 @@
 package servicios;
 
 import gateway.sms.JaxSms;
-import java.io.IOException;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -119,22 +118,39 @@ public class ConductorWS {
         return mensajeRespuesta;
     }
 
-    @Path("consultarCodigo")
+    @Path("activarConductor")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje consultarCodigoVerificacion(
-            @FormParam("telCelular") String telCelular) {
+    public Mensaje activarUsuario(
+            @FormParam("telCelular") String telCelular,
+            @FormParam("codigoVerificacion") String codigoVerificacion) {
         Mensaje mensajeRespuesta = new Mensaje();
-        Integer codigoVerificacion;
+        Conductor conductor = new Conductor();
+        Integer codigoRecuperado;
+        boolean exito;
         try {
-            codigoVerificacion = ConductorDAO.consultarCodigoVerificacion(telCelular);
-            if (codigoVerificacion != null) {
-                mensajeRespuesta.setSmsCode(Integer.toString(codigoVerificacion));
+            codigoRecuperado = ConductorDAO.consultarCodigoVerificacion(telCelular);
+            if (codigoRecuperado != null) {
+                if (codigoVerificacion.equals(Integer.toString(codigoRecuperado))) {
+                    exito = ConductorDAO.activarConductor(telCelular);
+                    conductor = ConductorDAO.iniciarSesion(telCelular);
+
+                    if (exito) {
+                        mensajeRespuesta.setMensaje("Se activó el usuario con éxito");
+                        mensajeRespuesta.setConductor(conductor);
+                        mensajeRespuesta.setStatusMensaje(150);
+                    } else {
+                        mensajeRespuesta.setMensaje("No se pudo activar el usuario");
+                        mensajeRespuesta.setStatusMensaje(151);
+                    }
+                } else {
+                    mensajeRespuesta.setMensaje("Código incorrecto");
+                    mensajeRespuesta.setStatusMensaje(152);
+                }
             } else {
                 mensajeRespuesta.setMensaje("El usuario no se encuentra registrado");
                 mensajeRespuesta.setStatusMensaje(253);
             }
-
         } catch (Exception ex) {
             mensajeRespuesta.setMensaje("Error al recuperar");
             mensajeRespuesta.setStatusMensaje(1);
