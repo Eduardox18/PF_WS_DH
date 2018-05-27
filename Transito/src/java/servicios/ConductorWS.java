@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 import modelo.dao.ConductorDAO;
 import servicios.pojos.Conductor;
 import servicios.pojos.Mensaje;
-import servicios.pojos.RespuestaEmailSMS;
 import java.util.Random;
 import modelo.Cifrado;
 import modelo.mybatis.MyBatisUtils;
@@ -39,23 +38,30 @@ public class ConductorWS {
             @FormParam("telCelular") String telCelular,
             @FormParam("password") String password) {
         Mensaje mensajeRespuesta = new Mensaje();
-        Cifrado cifrador = new Cifrado();
-        Conductor conductor = new Conductor(nombre, apPaterno, apMaterno, fechaNacimiento,
-                noLicencia, telCelular, cifrador.cifrarCadena(password));
-        try {
-            ConductorDAO.agregarConductor(conductor);
-            mensajeRespuesta.setStatusMensaje(0);
-            //Envía SMS
-            Random rand = new Random();
 
-            int number = rand.nextInt(9999) + 1111;
-            RespuestaEmailSMS res = new RespuestaEmailSMS();
-            JaxSms jax = new JaxSms();
-            String respuesta = jax.enviar(telCelular, Integer.toString(number));
-            mensajeRespuesta.setSmsCode(respuesta);
-            // Fin SMS
-            mensajeRespuesta.setMensaje("El usuario se agregó correctamente");
-        } catch (IOException ex) {
+        Random rand = new Random();
+        int number = rand.nextInt(9999) + 1111;
+
+        Conductor conductor = new Conductor(nombre, apPaterno, apMaterno, fechaNacimiento,
+                noLicencia, telCelular, Cifrado.cifrarCadena(password), number, false);
+
+        try {
+            boolean disponible = ConductorDAO.disponibilidadConductor(conductor);
+            if (disponible) {
+                ConductorDAO.agregarConductor(conductor);
+                //SMS
+                JaxSms jax = new JaxSms();
+                String respuesta = jax.enviar(telCelular, Integer.toString(number));
+                mensajeRespuesta.setSmsCode(respuesta);
+                //SMS
+                mensajeRespuesta.setStatusMensaje(0);
+                mensajeRespuesta.setMensaje("El usuario se agregó correctamente");
+            } else {
+                mensajeRespuesta.setStatusMensaje(149);
+                mensajeRespuesta.setMensaje("Ya existe el número de celular o el número de "
+                        + "licencia, por favor compruebe sus datos.");
+            }
+        } catch (Exception ex) {
             ex.printStackTrace();
             mensajeRespuesta.setStatusMensaje(1);
             mensajeRespuesta.setMensaje("Ocurrió un error al registrar el usuario");
@@ -71,8 +77,7 @@ public class ConductorWS {
             @FormParam("password") String password) {
         Mensaje mensajeRespuesta = new Mensaje();
 
-        Cifrado cifrado = new Cifrado();
-        String passwordIngresado = cifrado.cifrarCadena(password);
+        String passwordIngresado = Cifrado.cifrarCadena(password);
 
         Conductor conductorConsultado = null;
         Integer status;
@@ -107,8 +112,31 @@ public class ConductorWS {
                     mensajeRespuesta.setStatusMensaje(253);
                 }
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             mensajeRespuesta.setMensaje("Error al iniciar");
+            mensajeRespuesta.setStatusMensaje(1);
+        }
+        return mensajeRespuesta;
+    }
+
+    @Path("consultarCodigo")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje consultarCodigoVerificacion(
+            @FormParam("telCelular") String telCelular) {
+        Mensaje mensajeRespuesta = new Mensaje();
+        Integer codigoVerificacion;
+        try {
+            codigoVerificacion = ConductorDAO.consultarCodigoVerificacion(telCelular);
+            if (codigoVerificacion != null) {
+                mensajeRespuesta.setSmsCode(Integer.toString(codigoVerificacion));
+            } else {
+                mensajeRespuesta.setMensaje("El usuario no se encuentra registrado");
+                mensajeRespuesta.setStatusMensaje(253);
+            }
+
+        } catch (Exception ex) {
+            mensajeRespuesta.setMensaje("Error al recuperar");
             mensajeRespuesta.setStatusMensaje(1);
         }
         return mensajeRespuesta;

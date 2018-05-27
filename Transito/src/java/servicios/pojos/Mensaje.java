@@ -6,6 +6,7 @@ public class Mensaje {
      * Significado de statusMensaje:
      * 1 es que ocurrió un error
      * 0 es que no ocurrió un error
+     * 149 es que ya existe ese celular o licencia
      * 250 es que el usuario existe y su contraseña es correcta
      * 251 es que los datos son incorrectos
      * 252 es que el usuario no ha activado su cuenta
