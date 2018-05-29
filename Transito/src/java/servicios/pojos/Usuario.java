@@ -22,8 +22,13 @@ public class Usuario {
         this.idCargo = idCargo;
     }
 
-    public Usuario(String nombre, String apPaterno, String apMaterno, String username, String cifrarCadena, Integer idCargo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Usuario(String nombre, String apPaterno, String apMaterno, String username, String password, Integer idCargo) {
+        this.nombre = nombre;
+        this.apPaterno = apPaterno;
+        this.apMaterno = apMaterno;
+        this.username = username;
+        this.password = password;
+        this.idCargo = idCargo;
     }
 
     public Integer getIdUsuario() {

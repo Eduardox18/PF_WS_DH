@@ -1,6 +1,5 @@
 package servicios;
 
-import java.util.Random;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -26,6 +25,17 @@ public class UsuarioWS {
     public UsuarioWS() {
     }
 
+    /**
+     * Registra un usuario a la base de datos de acuerdo a su cargo 
+     * (administrativo, perito, soporte, atención)
+     * @param nombre nombre del usuario
+     * @param apPaterno apellido paterno del usuario
+     * @param apMaterno apellido materno del usuario
+     * @param username nombre de usuario para ingreso al sistema
+     * @param password contraseña de usuario
+     * @param idCargo cargo que tiene (de los mencionados arriba)
+     * @return 
+     */
     @Path("registrarUsuario")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,20 +48,14 @@ public class UsuarioWS {
         @FormParam("idCargo") Integer idCargo) {
         Mensaje mensajeRespuesta = new Mensaje();
 
-        Random rand = new Random();
-        int number = rand.nextInt(9999) + 1111;
-
         Usuario usuario = new Usuario(nombre, apPaterno, apMaterno, username,
             Cifrado.cifrarCadena(password), idCargo);
 
         try {
-
             UsuarioDAO.agregarUsuario(usuario);
             mensajeRespuesta.setMensaje("El usuario se agregó correctamente");
-
         } catch (Exception ex) {
             ex.printStackTrace();
-            mensajeRespuesta.setStatusMensaje(1);
             mensajeRespuesta.setMensaje("Ocurrió un error al registrar el usuario");
         }
         return mensajeRespuesta;

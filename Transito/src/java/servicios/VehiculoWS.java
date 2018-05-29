@@ -7,12 +7,14 @@ package servicios;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
+import modelo.dao.VehiculoDAO;
+import servicios.pojos.Mensaje;
+import servicios.pojos.Vehiculo;
 
 /**
  * REST Web Service
@@ -32,22 +34,43 @@ public class VehiculoWS {
     }
 
     /**
-     * Retrieves representation of an instance of servicios.VehiculoWS
-     * @return an instance of java.lang.String
+     * Agrega vehículo a la base de datos. 
+     * @param noPlaca
+     * @param modelo
+     * @param anio
+     * @param noPolizaSeguro
+     * @param idMarca
+     * @param idAseguradora
+     * @param idColor
+     * @param idConductor
+     * @return 
      */
-    @GET
+    @Path("agregarVehiculo")
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
+    public Mensaje agregarUsuario(
+        @FormParam("noPlaca") String noPlaca,
+        @FormParam("modelo") String modelo,
+        @FormParam("anio") Integer anio,
+        @FormParam("noPolizaSeguro") String noPolizaSeguro,
+        @FormParam("idMarca") Integer idMarca,
+        @FormParam("idAseguradora") Integer idAseguradora,
+        @FormParam("idColor") Integer idColor,
+        @FormParam("idConductor") Integer idConductor) {
+        Mensaje mensajeRespuesta = new Mensaje();
 
-    /**
-     * PUT method for updating or creating an instance of VehiculoWS
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+        Vehiculo vehiculo = new Vehiculo(noPlaca, modelo, anio, noPolizaSeguro,
+            idMarca, idAseguradora, idColor, idConductor);
+
+        try {
+            VehiculoDAO.agregarVehiculo(vehiculo);
+            mensajeRespuesta.setMensaje("El vehículo se agregó correctamente");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mensajeRespuesta.setStatusMensaje(1);
+            mensajeRespuesta.setMensaje("Ocurrió un error al registrar el vehículo");
+        }
+        return mensajeRespuesta;
     }
 }
