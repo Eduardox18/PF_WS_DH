@@ -14,6 +14,8 @@ public class Mensaje {
      * 251 es que los datos son incorrectos
      * 252 es que el usuario no ha activado su cuenta
      * 253 es que el usuario no existe
+     * 300 es que el vehículo se agregó exitosamente
+     * 301 es que no se pudo agregar el vehículo
      */
     private Integer statusMensaje;
     private String smsCode;

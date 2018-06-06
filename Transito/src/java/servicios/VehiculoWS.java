@@ -62,10 +62,16 @@ public class VehiculoWS {
         Vehiculo vehiculo = new Vehiculo(noPlaca, modelo, anio, noPolizaSeguro,
             idMarca, idAseguradora, idColor, idConductor);
 
+        boolean exito;
         try {
-            VehiculoDAO.agregarVehiculo(vehiculo);
-            mensajeRespuesta.setMensaje("El vehículo se agregó correctamente");
-
+            exito = VehiculoDAO.agregarVehiculo(vehiculo);
+            if (exito) {
+                mensajeRespuesta.setStatusMensaje(300);
+                mensajeRespuesta.setMensaje("El vehículo se agregó correctamente");
+            } else {
+                mensajeRespuesta.setStatusMensaje(301);
+                mensajeRespuesta.setMensaje("El vehículo no se pudo agregar");
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             mensajeRespuesta.setStatusMensaje(1);
