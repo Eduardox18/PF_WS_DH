@@ -1,6 +1,5 @@
 package modelo.dao;
 
-import java.io.IOException;
 import modelo.mybatis.MyBatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import servicios.pojos.Conductor;
