@@ -58,6 +58,14 @@ public class VehiculoWS {
         @FormParam("idColor") Integer idColor,
         @FormParam("idConductor") Integer idConductor) {
         Mensaje mensajeRespuesta = new Mensaje();
+        
+        if (noPolizaSeguro.equals("null")) {
+            noPolizaSeguro = null;
+        }
+        
+        if (idAseguradora == 11) {
+            idAseguradora = null;
+        }
 
         Vehiculo vehiculo = new Vehiculo(noPlaca, modelo, anio, noPolizaSeguro,
             idMarca, idAseguradora, idColor, idConductor);
@@ -73,9 +81,8 @@ public class VehiculoWS {
                 mensajeRespuesta.setMensaje("El vehículo no se pudo agregar");
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
             mensajeRespuesta.setStatusMensaje(1);
-            mensajeRespuesta.setMensaje("Ocurrió un error al registrar el vehículo");
+            mensajeRespuesta.setMensaje("La placa ingresada ya se encuentra registrada");
         }
         return mensajeRespuesta;
     }
