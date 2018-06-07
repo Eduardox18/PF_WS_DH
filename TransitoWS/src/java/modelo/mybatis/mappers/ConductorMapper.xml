@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="disponibilidadConductor" 
             parameterType="servicios.pojos.Conductor" 
             resultType = "Integer">
-        SELECT idConductor FROM Conductor WHERE telCelular = #{telCelular} 
+        SELECT idConductor FROM conductor WHERE telCelular = #{telCelular} 
         OR noLicencia = #{noLicencia};
     </select>
     

@@ -112,7 +112,7 @@ public class ConductorWS {
                 }
             }
         } catch (Exception ex) {
-            mensajeRespuesta.setMensaje("Error al iniciar");
+            mensajeRespuesta.setMensaje(ex.getMessage());
             mensajeRespuesta.setStatusMensaje(1);
         }
         return mensajeRespuesta;
