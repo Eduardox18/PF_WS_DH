@@ -86,6 +86,21 @@ public class ReporteWS {
     }
     
     @GET
+    @Path("recuperarTodosReportes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Reporte> recuperarTodosReportes(
+    ) {
+        List<Reporte> reportes = null;
+        try {
+            reportes = ReporteDAO.recuperarTodosReportes();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return reportes;
+    }
+    
+    
+    @GET
     @Path("ultimoReporte")
     @Produces(MediaType.APPLICATION_JSON)
     public Reporte consultarUltimo() {

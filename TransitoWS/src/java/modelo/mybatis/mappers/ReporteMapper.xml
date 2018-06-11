@@ -24,4 +24,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT MAX(idReporte) as idVehiculo FROM reporte;
     </select>
     
+    <select id="recuperarTodosReportes" resultType="servicios.pojos.Reporte">
+        SELECT  * FROM reporte;
+    </select>
+    
 </mapper>

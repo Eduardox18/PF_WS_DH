@@ -26,6 +26,14 @@ public class ReporteDAO {
         return reportes;
     }
     
+    public static List<Reporte> recuperarTodosReportes () throws Exception {
+        List<Reporte> reportes = null;
+        try (SqlSession conn = MyBatisUtils.getSession()){
+            reportes = conn.selectList("Reporte.recuperarTodosReportes");
+        }
+        return reportes;
+    }
+    
     public static Integer consultarUltimo() throws Exception {
         Integer idReporte;
         try(SqlSession conn = MyBatisUtils.getSession()) {
