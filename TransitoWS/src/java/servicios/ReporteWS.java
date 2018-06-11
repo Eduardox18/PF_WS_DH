@@ -12,6 +12,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -83,4 +84,17 @@ public class ReporteWS {
         }
         return reportes;
     }
+    
+    @GET
+    @Path("ultimoReporte")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Reporte consultarUltimo() {
+        Reporte reporte = new Reporte();
+        try {
+            reporte.setIdReporte(ReporteDAO.consultarUltimo());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return reporte;
+    } 
 }

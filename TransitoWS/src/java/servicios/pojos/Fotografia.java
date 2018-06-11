@@ -3,14 +3,13 @@ package servicios.pojos;
 public class Fotografia {
     private Integer idFotografia;
     private byte[] foto;
-    private Integer idReporte;
+    private String idReporte;
     private String fechaHora;
 
     public Fotografia() {
     }
 
-    public Fotografia(Integer idFotografia, byte[] foto, Integer idReporte, String fechaHora) {
-        this.idFotografia = idFotografia;
+    public Fotografia(byte[] foto, String idReporte, String fechaHora) {
         this.foto = foto;
         this.idReporte = idReporte;
         this.fechaHora = fechaHora;
@@ -32,11 +31,11 @@ public class Fotografia {
         this.foto = foto;
     }
 
-    public Integer getIdReporte() {
+    public String getIdReporte() {
         return idReporte;
     }
 
-    public void setIdReporte(Integer idReporte) {
+    public void setIdReporte(String idReporte) {
         this.idReporte = idReporte;
     }
 

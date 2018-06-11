@@ -20,4 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         AND reporte.idVehiculoConductor = vehiculo.idVehiculo;
     </select>
     
+    <select id="recuperarUltimo" resultType="Integer">
+        SELECT MAX(idReporte) as idVehiculo FROM reporte;
+    </select>
+    
 </mapper>

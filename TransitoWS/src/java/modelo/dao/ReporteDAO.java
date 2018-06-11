@@ -1,9 +1,6 @@
 package modelo.dao;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import modelo.mybatis.MyBatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import servicios.pojos.Reporte;
@@ -27,5 +24,13 @@ public class ReporteDAO {
             reportes = conn.selectList("Reporte.recuperarReportes", idConductor);
         }
         return reportes;
+    }
+    
+    public static Integer consultarUltimo() throws Exception {
+        Integer idReporte;
+        try(SqlSession conn = MyBatisUtils.getSession()) {
+            idReporte = conn.selectOne("Reporte.recuperarUltimo"); 
+        }
+        return idReporte;
     }
 }

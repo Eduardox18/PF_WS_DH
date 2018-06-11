@@ -18,7 +18,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import modelo.dao.VehiculoDAO;
-import org.apache.ibatis.session.SqlSession;
 import servicios.pojos.Mensaje;
 import servicios.pojos.Vehiculo;
 

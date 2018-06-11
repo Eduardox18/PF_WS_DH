@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{apMaterno}, #{username}, #{password}, #{idCargo});
     </insert>
     
-    <select id="iniciarSesion" parameterType="string" resultType="servicios.pojos.Usuario> ">
+    <select id="iniciarSesion" parameterType="string" resultType="servicios.pojos.Usuario">
         SELECT * FROM usuario WHERE nombreUsuario = #{nombreUsuario};
     </select>
 </mapper>
