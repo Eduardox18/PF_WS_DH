@@ -128,16 +128,16 @@ public class VehiculoWS {
         return vehiculo;
     } 
     
-    @POST
+    @GET
     @Path("ultimoVehiculo")
     @Produces(MediaType.APPLICATION_JSON)
-    public Integer consultarUltimo() {
-        Integer idVehiculo = null;
+    public Vehiculo consultarUltimo() {
+        Vehiculo vehiculo = new Vehiculo();
         try {
-            idVehiculo = VehiculoDAO.consultarUltimo();
+            vehiculo.setIdVehiculo(VehiculoDAO.consultarUltimo());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return idVehiculo;
+        return vehiculo;
     } 
 }

@@ -4,4 +4,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="DictamenReporte"> 
+    
+    <select id="recuperarDictamen" parameterType="String" resultType="servicios.pojos.ResultadoDictamen">
+        SELECT folio, descripcion, fechaHora, nombre, apPaterno 
+        FROM dictamenReporte, usuario 
+        WHERE idReporte = #{idReporte} and idUsuario = idPerito;
+    </select>
+    
 </mapper>

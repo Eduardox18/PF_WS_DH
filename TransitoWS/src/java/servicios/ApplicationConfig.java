@@ -17,6 +17,7 @@ public class ApplicationConfig extends Application {
         resources.add(servicios.AseguradoraWS.class);
         resources.add(servicios.ColorWS.class);
         resources.add(servicios.ConductorWS.class);
+        resources.add(servicios.DictamenReporteWS.class);
         resources.add(servicios.EmailWS.class);
         resources.add(servicios.MarcaWS.class);
         resources.add(servicios.ReporteWS.class);

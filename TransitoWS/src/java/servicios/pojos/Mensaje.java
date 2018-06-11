@@ -16,6 +16,8 @@ public class Mensaje {
      * 253 es que el usuario no existe
      * 300 es que el vehículo se agregó exitosamente
      * 301 es que no se pudo agregar el vehículo
+     * 500 es que se registró el reporte
+     * 501 es que no se registró el reporte
      */
     private Integer statusMensaje;
     private String smsCode;

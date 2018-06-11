@@ -13,4 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{idVehiculoConductor}, #{idVehiculoSiniestro});
     </insert>
     
+    <select id="recuperarReportes" parameterType="String" 
+            resultType="servicios.pojos.ResultadoReporte">
+        SELECT idReporte, fechaHora, noPlaca, nombreSiniestro, apPaternoSiniestro 
+        FROM reporte, vehiculo WHERE reporte.idConductor = #{idConductor}
+        AND reporte.idVehiculoConductor = vehiculo.idVehiculo;
+    </select>
+    
 </mapper>
