@@ -96,5 +96,5 @@ public class ReporteWS {
             ex.printStackTrace();
         }
         return reporte;
-    } 
+    }
 }

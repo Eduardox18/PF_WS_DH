@@ -11,6 +11,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     
     <select id="iniciarSesion" parameterType="string" resultType="servicios.pojos.Usuario">
-        SELECT * FROM usuario WHERE nombreUsuario = #{nombreUsuario};
+        SELECT * FROM usuario WHERE username = #{nombreUsuario};
     </select>
+    
+    <delete id="eliminarUsuario" parameterType="Integer">
+        DELETE FROM usuario WHERE idUsuario = #{idUsuario};
+    </delete>
+    
+    <update id="actualizarUsuario" parameterType="servicios.pojos.Usuario">
+        UPDATE usuario SET nombre = #{nombre}, apPaterno = #{apPaterno}, 
+        apMaterno = #{apMaterno}, username = #{username} WHERE 
+        idUsuario = #{idUsuario};
+    </update>
 </mapper>

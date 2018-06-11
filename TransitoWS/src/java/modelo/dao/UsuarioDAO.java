@@ -47,4 +47,25 @@ public class UsuarioDAO {
         }
         return usuario;
     }
+    
+    public static boolean eliminarUsuario(Integer idUsuario) throws Exception {
+        boolean exito = false;
+        try (SqlSession conn = MyBatisUtils.getSession()) {
+            conn.delete("Usuario.eliminarUsuario", idUsuario);
+            conn.commit();
+            exito = true;
+        }
+        return exito;
+    }
+    
+    public static boolean actualizarUsuario(Usuario usuario) throws Exception {
+        boolean exito = false;
+        try (SqlSession conn = MyBatisUtils.getSession()) {
+            conn.update("Usuario.actualizarUsuario", usuario);
+            conn.commit();
+            exito = true;
+        }
+        return exito;
+    }
+    
 }

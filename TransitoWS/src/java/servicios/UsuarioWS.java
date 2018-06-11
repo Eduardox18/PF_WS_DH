@@ -1,17 +1,16 @@
 package servicios;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 import modelo.Cifrado;
-import modelo.dao.ConductorDAO;
 import modelo.dao.UsuarioDAO;
-import modelo.mybatis.MyBatisUtils;
-import servicios.pojos.Conductor;
 import servicios.pojos.Mensaje;
 import servicios.pojos.Usuario;
 
@@ -86,7 +85,7 @@ public class UsuarioWS {
                 usuarioConsultado = UsuarioDAO.iniciarSesion(nombreUsuario);
                 if (usuarioConsultado != null) {
                     if(usuarioConsultado.getUsername().equals(nombreUsuario) && 
-                            usuarioConsultado.getPassword().equals(password)){
+                            usuarioConsultado.getPassword().equals(Cifrado.cifrarCadena(password))){
                         mensaje.setMensaje("Inicio exitoso");
                         mensaje.setStatusMensaje(250);
                     } else {
@@ -101,6 +100,59 @@ public class UsuarioWS {
         } catch (Exception ex) {
             mensaje.setMensaje(ex.getMessage());
             mensaje.setStatusMensaje(1);
+        }
+        return mensaje;
+    }
+    
+    @Path("eliminarUsuario")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje eliminarnota(
+        @FormParam("idUsuario") Integer idUsuario
+    ) {
+        Mensaje mensaje = new Mensaje();
+        boolean exito = false;
+        
+        try {
+            exito = UsuarioDAO.eliminarUsuario(idUsuario);
+            if (exito) {
+                mensaje.setMensaje("Se eliminó el usuario");
+            } else {
+                mensaje.setMensaje("No se pudo eliminar el usuario");
+            }
+            
+        } catch (Exception ioEx) {
+            ioEx.printStackTrace();
+            mensaje.setStatusMensaje(1);
+            mensaje.setMensaje("Error al eliminar: " + ioEx.getMessage());
+        }
+        return mensaje;
+    }
+    
+    @PUT
+    @Path("actualizarUsuario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje actualizarUsuario(
+        @FormParam("idUsuario") Integer idUsuario,
+        @FormParam("nombre") String nombre,
+        @FormParam("apPaterno") String apPaterno,
+        @FormParam("apMaterno") String apMaterno,
+        @FormParam("username") String username
+    ) {
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(idUsuario);
+        usuario.setNombre(nombre);
+        usuario.setApPaterno(apPaterno);
+        usuario.setApMaterno(apMaterno);
+        usuario.setUsername(username);
+        Mensaje mensaje = new Mensaje();
+        try {
+            UsuarioDAO.actualizarUsuario(usuario);
+            mensaje.setMensaje("Se actualizó el usuario correctamente");
+        } catch (Exception ioEx) {
+            ioEx.printStackTrace();
+            mensaje.setStatusMensaje(1);
+            mensaje.setMensaje("Error al actualizar: " + ioEx.getMessage());
         }
         return mensaje;
     }
