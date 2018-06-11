@@ -20,6 +20,15 @@ public class DictamenReporte {
         this.idPerito = idPerito;
     }
 
+    public DictamenReporte(String descripcion, String estado, String fechaHora, Integer idReporte, Integer idPerito) {
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.fechaHora = fechaHora;
+        this.idReporte = idReporte;
+        this.idPerito = idPerito;
+    }
+    
+
     public Integer getFolio() {
         return folio;
     }

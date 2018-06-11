@@ -5,8 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="Usuario"> 
     <insert id="agregarUsuario" parameterType="servicios.pojos.Usuario">
-        INSERT INTO conductor (nombre, apPaterno, apMaterno, username, 
+        INSERT INTO usuario (nombre, apPaterno, apMaterno, username, 
         password, idCargo) VALUES (#{nombre}, #{apPaterno}, 
         #{apMaterno}, #{username}, #{password}, #{idCargo});
     </insert>
+    
+    <select id="iniciarSesion" parameterType="string" resultType="servicios.pojos.Usuario> ">
+        SELECT * FROM usuario WHERE nombreUsuario = #{nombreUsuario};
+    </select>
 </mapper>

@@ -11,4 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idReporte = #{idReporte} and idUsuario = idPerito;
     </select>
     
+    <insert id="dictaminarReporte" parameterType="servicios.pojos.DictamenReporte">
+        INSERT INTO dictamenReporte, (descripcion, estado, fechaHora, idReporte,
+        idPerito) VALUES (#{descripcion}, #{estado}, #{fechaHora}, #{idReporte}, 
+        #{idPerito});
+    </insert>
+    
 </mapper>

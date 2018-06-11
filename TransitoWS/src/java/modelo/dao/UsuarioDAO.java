@@ -33,4 +33,18 @@ public class UsuarioDAO {
         }
         return resultado;
     }
+    
+    /**
+     * Busca por coincidencias en la base de datos por el nombreUsuario ingresado
+     * @param nombreUsuario El nombre que se desea buscar
+     * @return Un objeto Usuario en caso de que se encuentre una coincidencia o null de lo contrario
+     * @throws Exception 
+     */
+    public static Usuario iniciarSesion(String nombreUsuario) throws Exception {
+        Usuario usuario = null;
+        try (SqlSession conn = MyBatisUtils.getSession()) {
+            usuario = conn.selectOne("Usuario.iniciarSesion", nombreUsuario);
+        }
+        return usuario;
+    }
 }
