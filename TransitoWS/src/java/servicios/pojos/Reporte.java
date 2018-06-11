@@ -40,8 +40,6 @@ public class Reporte {
         this.idVehiculoSiniestro = idVehiculoSiniestro;
     }
     
-    
-
     public Integer getIdReporte() {
         return idReporte;
     }
@@ -121,6 +119,4 @@ public class Reporte {
     public void setIdVehiculoSiniestro(String idVehiculoSiniestro) {
         this.idVehiculoSiniestro = idVehiculoSiniestro;
     }
-    
-    
 }

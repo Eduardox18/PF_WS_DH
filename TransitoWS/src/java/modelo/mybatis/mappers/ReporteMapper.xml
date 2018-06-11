@@ -4,5 +4,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Reporte"> 
+    <insert id="agregarReporte" parameterType="servicios.pojos.Reporte">
+        INSERT INTO reporte(latitud, longitud, nombreSiniestro, 
+        apPaternoSiniestro, apMaternoSiniestro, fechaHora, idConductor, 
+        idVehiculoConductor, idVehiculoSiniestro) VALUES (#{latitud}, 
+        #{longitud}, #{nombreSiniestro}, #{apPaternoSiniestro}, 
+        #{apMaternoSiniestro}, #{fechaHora}, #{idConductor}, 
+        #{idVehiculoConductor}, #{idVehiculoSiniestro});
+    </insert>
     
 </mapper>

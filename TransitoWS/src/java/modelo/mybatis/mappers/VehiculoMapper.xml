@@ -11,4 +11,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{idConductor});
     </insert>
     
+    <select id="consultarVehiculos" parameterType="Integer" 
+            resultType="servicios.pojos.Vehiculo">
+        SELECT idVehiculo, noPlaca FROM vehiculo WHERE idConductor = #{idConductor};
+    </select>
+    
+    <select id="consultarVehiculo" parameterType="String" resultType="servicios.pojos.Vehiculo">
+        SELECT * FROM vehiculo WHERE noPlaca=#{noPlaca};
+    </select>
+    
+    <select id="consultarUltimo" resultType="Integer">
+        SELECT MAX(idVehiculo) FROM vehiculo;
+    </select>
+    
 </mapper>

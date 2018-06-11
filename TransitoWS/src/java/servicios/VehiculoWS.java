@@ -5,14 +5,20 @@
  */
 package servicios;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import modelo.dao.VehiculoDAO;
+import org.apache.ibatis.session.SqlSession;
 import servicios.pojos.Mensaje;
 import servicios.pojos.Vehiculo;
 
@@ -56,7 +62,7 @@ public class VehiculoWS {
         @FormParam("idMarca") Integer idMarca,
         @FormParam("idAseguradora") Integer idAseguradora,
         @FormParam("idColor") Integer idColor,
-        @FormParam("idConductor") Integer idConductor) {
+        @FormParam("idConductor") String idConductor) {
         Mensaje mensajeRespuesta = new Mensaje();
         
         if (noPolizaSeguro.equals("null")) {
@@ -65,6 +71,10 @@ public class VehiculoWS {
         
         if (idAseguradora == 11) {
             idAseguradora = null;
+        }
+        
+        if(idConductor.equals("null")) {
+            idConductor = null;
         }
 
         Vehiculo vehiculo = new Vehiculo(noPlaca, modelo, anio, noPolizaSeguro,
@@ -80,10 +90,54 @@ public class VehiculoWS {
                 mensajeRespuesta.setStatusMensaje(301);
                 mensajeRespuesta.setMensaje("El vehículo no se pudo agregar");
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             mensajeRespuesta.setStatusMensaje(1);
             mensajeRespuesta.setMensaje("La placa ingresada ya se encuentra registrada");
         }
         return mensajeRespuesta;
     }
+    
+    
+    @GET
+    @Path("consultarVehiculos/{idConductor}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Vehiculo> consultarVehiculos(
+        @PathParam("idConductor") Integer idConductor 
+    ) {
+        List <Vehiculo> vehiculos = new ArrayList<>();
+        try {
+            vehiculos = VehiculoDAO.consultarVehiculos(idConductor);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return vehiculos;
+    }
+    
+    @POST
+    @Path("consultarVehiculo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Vehiculo consultarVehiculo(
+        @FormParam("noPlaca") String noPlaca 
+    ) {
+        Vehiculo vehiculo = new Vehiculo();
+        try {
+            vehiculo = VehiculoDAO.consultarVehiculo(noPlaca);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return vehiculo;
+    } 
+    
+    @POST
+    @Path("ultimoVehiculo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Integer consultarUltimo() {
+        Integer idVehiculo = null;
+        try {
+            idVehiculo = VehiculoDAO.consultarUltimo();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return idVehiculo;
+    } 
 }
